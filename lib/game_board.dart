@@ -355,6 +355,34 @@ class _GameBoardState extends State<GameBoard> {
         }
         break;
       case ChessPieceType.king:
+        //All Eight Direction up down left right and 4 diagonalls
+        var directions = [
+          [-1, 0], //up 2 left 1
+          [1, 0], //up 2 right 1
+          [0, -1], // up 1 left 2
+          [0, 1], // up 1 right 2
+          [-1, -1], //down 1 left 2
+          [-1, 1], //down 1 right 2
+          [1, -1], //down 2 left 1
+          [1, 1], //down 2 right 1
+        ];
+        for (var direction in directions) {
+          while (true) {
+            var newRow = row + direction[0];
+            var newCol = col + direction[1];
+            if (!isInBoard(newRow, newCol)) {
+              continue;
+            }
+            if (board[newRow][newCol] != null) {
+              if (board[newRow][newCol]!.isWhite != piece.isWhite) {
+                candidateMoves.add([newRow, newCol]); //capture
+              }
+              break; //blocked
+            }
+            candidateMoves.add([newRow, newCol]);
+          }
+        }
+
         break;
       default:
     }
