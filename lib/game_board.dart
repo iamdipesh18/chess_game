@@ -239,9 +239,60 @@ class _GameBoardState extends State<GameBoard> {
 
       case ChessPieceType.rook:
         //horizontal and virtical directions
+        var directions = [
+          [-1, 0], //up
+          [1, 0], //down
+          [0, -1], //left
+          [0, 1], //right
+        ];
 
+        for (var direction in directions) {
+          var i = 1;
+          while (true) {
+            var newRow = row + i * direction[0];
+            var newCol = col + i * direction[1];
+            if (!isInBoard(newRow, newCol)) {
+              break;
+            }
+            if (board[newRow][newCol] != null) {
+              if (board[newRow][newCol]!.isWhite != piece.isWhite) {
+                candidateMoves.add([newRow, newCol]); //kill
+              }
+              break; //blocked
+            }
+            candidateMoves.add([newRow, newCol]);
+            i++;
+          }
+        }
         break;
       case ChessPieceType.knight:
+        //All Eight Possible Lshapes the Knight can Move
+        var knightMoves = [
+          [-2, -1], //up 2 left 1
+          [-2, 1], //up 2 right 1
+          [-1, -2], // up 1 left 2
+          [-1, 2], // up 1 right 2
+          [1, -2], //down 1 left 2
+          [1, 2], //down 1 right 2
+          [2, -1], //down 2 left 1
+          [2, 1], //down 2 right 1
+        ];
+
+        for (var move in knightMoves) {
+          var newRow = row + move[0];
+          var newCol = col + move[1];
+          if (!isInBoard(newRow, newCol)) {
+            continue;
+          }
+            if (board[newRow][newCol] != null) {
+              if (board[newRow][newCol]!.isWhite != piece.isWhite) {
+                candidateMoves.add([newRow, newCol]); //capture
+              }
+              continue; //blocked
+          }
+          candidateMoves.add([newRow, newCol]);
+        }
+
         break;
       case ChessPieceType.bishop:
         break;
