@@ -1464,11 +1464,11 @@
 //     );
 //   }
 // }
-import 'package:chess_game/components/dead_piece.dart';
-import 'package:chess_game/components/piece.dart';
-import 'package:chess_game/components/square.dart';
-import 'package:chess_game/helper/helper_methods.dart';
-import 'package:chess_game/values/colors.dart';
+import 'package:chess_game/components/dead_piece_working.dart';
+import 'package:chess_game/components/piece_working.dart';
+import 'package:chess_game/components/square_working.dart';
+import 'package:chess_game/helper/helper_methods_working.dart';
+import 'package:chess_game/values/colors_working.dart';
 import 'package:flutter/material.dart';
 
 class GameBoard extends StatefulWidget {
