@@ -1,104 +1,212 @@
-// lib/ui/game_board_view.dart
-
+import 'package:chess_game/services/chess_game_service.dart';
 import 'package:flutter/material.dart';
-import '../components/dead_piece.dart';
 import '../components/square.dart';
-import '../models/game_state.dart';
-import '../values/colors.dart';
+import '../components/dead_piece.dart';
 
-typedef OnTileTap = void Function(int row, int col);
-
-/// Returns true if the tile at (row, col) should be white color, false for black
-bool isWhiteTile(int row, int col) {
-  return (row + col) % 2 == 0;
-}
-
-/// Pure UI widget that renders the chess board view.
-/// Does not hold logic or state — receives everything via props.
 class GameBoardView extends StatelessWidget {
-  final GameState gameState;
-  final OnTileTap onTileTap;
+  final ChessGameService game;
+  final void Function(int row, int col) onTileTap;
 
-  const GameBoardView({
-    Key? key,
-    required this.gameState,
-    required this.onTileTap,
-  }) : super(key: key);
+  const GameBoardView({Key? key, required this.game, required this.onTileTap})
+    : super(key: key);
+
+  Color get _backgroundColor => const Color(0xFF121212);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
-      body: Column(
-        children: [
-          // White captured pieces (top)
-          Expanded(
-            child: GridView.builder(
-              itemCount: gameState.whitePiecesTaken.length,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 8,
-              ),
-              itemBuilder: (context, index) => DeadPiece(
-                imagePath: gameState.whitePiecesTaken[index].imagePath,
-                isWhite: true,
-              ),
-            ),
-          ),
+      backgroundColor: _backgroundColor,
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final boardSize = constraints.maxWidth < constraints.maxHeight
+                ? constraints.maxWidth
+                : constraints.maxHeight * 0.75;
 
-          // Check status text
-          Text(
-            gameState.checkStatus ? "CHECK!" : "",
-            style: const TextStyle(
-              color: Colors.red,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+            return Column(
+              children: [
+                const SizedBox(height: 20),
 
-          // Main chess board grid
-          Expanded(
-            flex: 3,
-            child: GridView.builder(
-              itemCount: 64,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 8,
-              ),
-              itemBuilder: (context, index) {
-                int row = index ~/ 8;
-                int col = index % 8;
-
-                return Square(
-                  isWhite: isWhiteTile(row, col),
-                  piece: gameState.board[row][col],
-                  isSelected:
-                      gameState.selectedRow == row &&
-                      gameState.selectedCol == col,
-                  isValidMove: gameState.validMoves.any(
-                    (m) => m[0] == row && m[1] == col,
+                // Modern Turn Indicator
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [_buildTurnIndicator()],
                   ),
-                  onTap: () => onTileTap(row, col),
-                );
-              },
-            ),
-          ),
+                ),
 
-          // Black captured pieces (bottom)
-          Expanded(
-            child: GridView.builder(
-              itemCount: gameState.blackPiecesTaken.length,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 8,
-              ),
-              itemBuilder: (context, index) => DeadPiece(
-                imagePath: gameState.blackPiecesTaken[index].imagePath,
-                isWhite: false,
-              ),
+                const SizedBox(height: 20),
+
+                // Chessboard container
+                Container(
+                  width: boardSize,
+                  height: boardSize,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.brown.shade700.withOpacity(0.8),
+                        Colors.brown.shade900,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.7),
+                        offset: const Offset(0, 8),
+                        blurRadius: 20,
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 8,
+                          ),
+                      itemCount: 64,
+                      itemBuilder: (context, index) {
+                        final row = index ~/ 8;
+                        final col = index % 8;
+
+                        final isSelected =
+                            game.gameState.selectedRow == row &&
+                            game.gameState.selectedCol == col;
+
+                        final isValidMove = game.gameState.validMoves.any(
+                          (pos) => pos[0] == row && pos[1] == col,
+                        );
+
+                        final isCheckSquare =
+                            game.gameState.checkStatus &&
+                            ((game.gameState.isWhiteTurn &&
+                                    game.gameState.whiteKingPosition[0] ==
+                                        row &&
+                                    game.gameState.whiteKingPosition[1] ==
+                                        col) ||
+                                (!game.gameState.isWhiteTurn &&
+                                    game.gameState.blackKingPosition[0] ==
+                                        row &&
+                                    game.gameState.blackKingPosition[1] ==
+                                        col));
+
+                        return Square(
+                          isWhite: (row + col) % 2 == 0,
+                          piece: game.gameState.board[row][col],
+                          isSelected: isSelected,
+                          isValidMove: isValidMove,
+                          isCheckSquare: isCheckSquare,
+                          onTap: () => onTileTap(row, col),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // Captured pieces container
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Column(
+                    children: [
+                      _buildCapturedRow(
+                        capturedPieces: game.gameState.whitePiecesTaken,
+                        isWhite: true,
+                      ),
+                      const SizedBox(height: 12),
+                      _buildCapturedRow(
+                        capturedPieces: game.gameState.blackPiecesTaken,
+                        isWhite: false,
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTurnIndicator() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        color: game.gameState.isWhiteTurn ? Colors.white : Colors.black,
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: (game.gameState.isWhiteTurn ? Colors.white : Colors.black)
+                .withOpacity(0.6),
+            blurRadius: 12,
+            spreadRadius: 1,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            game.gameState.isWhiteTurn ? Icons.circle : Icons.circle_outlined,
+            color: game.gameState.isWhiteTurn ? Colors.blueAccent : Colors.grey,
+            size: 24,
+          ),
+          const SizedBox(width: 12),
+          Text(
+            game.gameState.isWhiteTurn ? "White's Turn ♔" : "Black's Turn ♚",
+            style: TextStyle(
+              color: game.gameState.isWhiteTurn
+                  ? Colors.brown.shade900
+                  : Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              letterSpacing: 1.1,
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCapturedRow({
+    required List capturedPieces,
+    required bool isWhite,
+  }) {
+    if (capturedPieces.isEmpty) {
+      return SizedBox(
+        height: 48,
+        child: Center(
+          child: Text(
+            isWhite ? 'No captured white pieces' : 'No captured black pieces',
+            style: TextStyle(
+              color: Colors.grey.shade400,
+              fontStyle: FontStyle.italic,
+              fontSize: 14,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return SizedBox(
+      height: 48,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: capturedPieces.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        itemBuilder: (_, index) {
+          final piece = capturedPieces[index];
+          return DeadPiece(imagePath: piece.imagePath, isWhite: isWhite);
+        },
       ),
     );
   }

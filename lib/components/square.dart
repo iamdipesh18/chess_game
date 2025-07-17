@@ -1,52 +1,77 @@
-// lib/components/square.dart
-
 import 'package:flutter/material.dart';
 import '../models/chess_piece.dart';
 
-/// A single tile on the chessboard.
-/// Shows background color (white/black),
-/// optional highlights for selection and valid moves,
-/// and the chess piece image if present.
 class Square extends StatelessWidget {
-  final bool isWhite; // Whether tile is white or black (background color)
-  final ChessPiece? piece; // The chess piece on this tile, if any
-  final bool isSelected; // If this tile is currently selected by player
-  final bool isValidMove; // If this tile is a valid move highlight
-  final VoidCallback onTap; // Called when user taps this tile
+  final bool isWhite;
+  final ChessPiece? piece;
+  final bool isSelected;
+  final bool isValidMove;
+  final bool isCheckSquare;
+  final VoidCallback onTap;
 
   const Square({
     Key? key,
     required this.isWhite,
-    required this.piece,
-    required this.isSelected,
-    required this.isValidMove,
+    this.piece,
+    this.isSelected = false,
+    this.isValidMove = false,
+    this.isCheckSquare = false,
     required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Background color of tile (white or black)
-    final backgroundColor = isWhite ? Colors.white : Colors.grey.shade700;
+    final Color baseColor = isWhite ? Colors.brown[200]! : Colors.brown[700]!;
+    final Color highlightColor = Colors.amberAccent.withOpacity(0.7);
 
-    // Overlay color for selection/highlighting
-    Color? overlayColor;
+    Color squareColor = baseColor;
     if (isSelected) {
-      overlayColor = Colors.blue.withOpacity(0.5);
+      squareColor = Colors.blueAccent.withOpacity(0.8);
     } else if (isValidMove) {
-      overlayColor = Colors.green.withOpacity(0.5);
+      squareColor = Colors.greenAccent.withOpacity(0.6);
+    } else if (isCheckSquare) {
+      squareColor = Colors.redAccent.withOpacity(0.7);
     }
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        decoration: BoxDecoration(color: backgroundColor),
-        child: Stack(
-          children: [
-            if (piece != null)
-              Center(child: Image.asset(piece!.imagePath, fit: BoxFit.contain)),
-            if (overlayColor != null) Container(color: overlayColor),
-          ],
+        decoration: BoxDecoration(
+          color: squareColor,
+          border: Border.all(
+            color: isSelected ? Colors.yellowAccent : Colors.transparent,
+            width: 3,
+          ),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: Colors.yellowAccent.withOpacity(0.5),
+                    blurRadius: 8,
+                    spreadRadius: 2,
+                  )
+                ]
+              : null,
         ),
+        child: Center(
+          child: _buildPiece(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPiece() {
+    if (piece == null) {
+      return const SizedBox.shrink();
+    }
+
+    final ChessPiece nonNullPiece = piece!;
+
+    return Hero(
+      tag: 'piece_${nonNullPiece.type}_${nonNullPiece.isWhite}_$hashCode',
+      child: Image.asset(
+        nonNullPiece.imagePath,
+        fit: BoxFit.contain,
+        filterQuality: FilterQuality.high,
       ),
     );
   }

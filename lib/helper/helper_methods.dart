@@ -31,3 +31,4 @@ int getPieceValue(String name) {
       return 0;
   }
 }
+

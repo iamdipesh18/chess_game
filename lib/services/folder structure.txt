@@ -1,0 +1,9 @@
+lib/
+ └── services/
+      ├── chess_game_service.dart      # Main facade service class combining others
+      ├── board_initializer.dart       # Board setup functions
+      ├── move_generator.dart          # Functions for raw move generation
+      ├── move_validator.dart          # Filtering moves for king safety
+      ├── game_state_updater.dart      # Moving pieces, updating state, toggling turns
+      ├── check_detector.dart          # Check and checkmate detection
+      └── helpers.dart                 # Common helpers like isInBoard

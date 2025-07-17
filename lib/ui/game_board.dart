@@ -1,7 +1,7 @@
 import 'package:chess_game/models/chess_piece.dart';
+import 'package:chess_game/services/chess_game_service.dart';
 import 'package:flutter/material.dart';
 import '../models/game_state.dart';
-import '../services/chess_game_service.dart';
 import 'game_board_view.dart';
 
 /// The main GameBoard widget that holds the state and game logic.
@@ -74,8 +74,9 @@ class _GameBoardState extends State<GameBoard> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return GameBoardView(gameState: gameState, onTileTap: handleTileTap);
-  }
+@override
+Widget build(BuildContext context) {
+  return GameBoardView(game: gameService, onTileTap: handleTileTap);
+}
+
 }

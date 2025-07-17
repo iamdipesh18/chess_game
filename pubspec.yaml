@@ -65,6 +65,18 @@ flutter:
     - assets/rook.png
     - assets/knight.png
     - assets/bishop.png
+    - assets/pawn_white.png
+    - assets/king_white.png
+    - assets/queen_white.png
+    - assets/rook_white.png
+    - assets/knight_white.png
+    - assets/bishop_white.png
+    - assets/pawn_black.png
+    - assets/king_black.png
+    - assets/queen_black.png
+    - assets/rook_black.png
+    - assets/knight_black.png
+    - assets/bishop_black.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
