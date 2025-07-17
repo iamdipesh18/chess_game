@@ -565,7 +565,7 @@
 //     );
 //   }
 // }
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, duplicate_ignore
 
 // import 'package:chess_game/components/dead_piece.dart';
 // import 'package:chess_game/components/piece.dart';
@@ -1675,6 +1675,16 @@ class _GameBoardState extends State<GameBoard> {
       validMoves = [];
     });
 
+    //check if it's a checkmate
+    if (isCheckMate(!isWhiteTurn)) {
+      showDialog(context: context, builder: (context)=>AlertDialog(title: const Text('CHECK MATE!'),
+      actions: [
+        //play again button
+        TextButton(onPressed: resetGame, child: const Text("Play Again"))
+      ],));
+    }
+
+    //change turns
     isWhiteTurn = !isWhiteTurn;
   }
 
@@ -1707,12 +1717,14 @@ class _GameBoardState extends State<GameBoard> {
         break;
 
       case ChessPieceType.rook:
-        moves.addAll(slideMoves(row, col, piece, [
-          [-1, 0],
-          [1, 0],
-          [0, -1],
-          [0, 1],
-        ]));
+        moves.addAll(
+          slideMoves(row, col, piece, [
+            [-1, 0],
+            [1, 0],
+            [0, -1],
+            [0, 1],
+          ]),
+        );
         break;
 
       case ChessPieceType.knight:
@@ -1736,25 +1748,41 @@ class _GameBoardState extends State<GameBoard> {
         break;
 
       case ChessPieceType.bishop:
-        moves.addAll(slideMoves(row, col, piece, [
-          [-1, -1],
-          [-1, 1],
-          [1, -1],
-          [1, 1],
-        ]));
+        moves.addAll(
+          slideMoves(row, col, piece, [
+            [-1, -1],
+            [-1, 1],
+            [1, -1],
+            [1, 1],
+          ]),
+        );
         break;
 
       case ChessPieceType.queen:
-        moves.addAll(slideMoves(row, col, piece, [
-          [-1, 0], [1, 0], [0, -1], [0, 1],
-          [-1, -1], [-1, 1], [1, -1], [1, 1]
-        ]));
+        moves.addAll(
+          slideMoves(row, col, piece, [
+            [-1, 0],
+            [1, 0],
+            [0, -1],
+            [0, 1],
+            [-1, -1],
+            [-1, 1],
+            [1, -1],
+            [1, 1],
+          ]),
+        );
         break;
 
       case ChessPieceType.king:
         for (var d in [
-          [-1, 0], [1, 0], [0, -1], [0, 1],
-          [-1, -1], [-1, 1], [1, -1], [1, 1],
+          [-1, 0],
+          [1, 0],
+          [0, -1],
+          [0, 1],
+          [-1, -1],
+          [-1, 1],
+          [1, -1],
+          [1, 1],
         ]) {
           int r = row + d[0], c = col + d[1];
           if (!isInBoard(r, c)) continue;
@@ -1849,7 +1877,51 @@ class _GameBoardState extends State<GameBoard> {
 
     return !kingInCheck;
   }
+      //is it a check mate?
+    bool isCheckMate(bool isWhiteKing) {
+      // if the king is not in check , then its not a checkmate
+      if (!isKingInCheck(isWhiteKing)) {
+        return false;
+      }
+      //if there is at least one legal move for ant of the player's pieces then its not checkmate
+      for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+          //Skips empty squares and pieces of the other color
+          if (board[i][j] == null || board[i][j]!.isWhite != isWhiteKing) {
+            continue;
+          }
+          List<List<int>> pieceValidMoves = calculateRealValidMoves(
+            i,
+            j,
+            board[i][j],
+            true,
+          );
+          //if this piece has any valid moves, then it's not checkmate
+          if (pieceValidMoves.isNotEmpty) {
+            return false;
+          }
+        }
+      }
+      // if nonr of the above conditions are met , then there are no legal moves left to make
 
+      // its a check mate
+      return true;
+    }
+
+  //Reset the game
+  void resetGame(){
+    Navigator.pop(context);
+    _initializeBoard();
+    checkStatus=false;
+    whitePiecesTaken.clear();
+    blackPiecesTaken.clear();
+    whiteKingPosition=[7,4];
+    blackKingPosition=[0,4];
+    isWhiteTurn=true;
+    setState(() {
+      
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
