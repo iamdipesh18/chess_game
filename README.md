@@ -43,3 +43,15 @@
 ```bash
 git clone https://github.com/iamdipesh18/chess_game.git
 cd chess_game
+
+---
+
+### 2. Install Dependencies
+```bash 
+flutter pub get
+
+---
+
+### 3. Run the App
+```bash 
+flutter run
