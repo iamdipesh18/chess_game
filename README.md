@@ -16,11 +16,16 @@
 
 ## 🎮 Preview
 
-> Add your own GIF or screenshot here (record using Screenity, OBS, or VS Code Recorder):
-
-<p align="center">
-  <img src="assets/demo.gif" alt="Chess Game Demo" width="600"/>
-</p>
+<table align="center">
+  <tr>
+    <td><img src="assets/screenshot1.png" alt="Screenshot 1" width="280" /></td>
+    <td><img src="assets/screenshot2.png" alt="Screenshot 2" width="280" /></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshot3.png" alt="Screenshot 3" width="280" /></td>
+    <td><img src="assets/screenshot4.png" alt="Screenshot 4" width="280" /></td>
+  </tr>
+</table>
 
 ---
 
