@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="Chess Game Logo" width="120" />
+</p>
+
 <h1 align="center">
   ♟️ Flutter Chess Game
 </h1>
@@ -12,7 +16,6 @@
   <img src="https://img.shields.io/github/stars/iamdipesh18/chess_game?style=social" />
 </p>
 
----
 
 ## 🎮 Preview
 
