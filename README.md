@@ -31,7 +31,7 @@
 - 🔒 Check & checkmate detection
 - 🔄 State management using modular service classes
 - 🧩 Clean, maintainable architecture (separation of UI & logic)
-- 📱 Responsive & interactive UI (tap/drag moves)
+- 📱 Responsive & interactive UI (tap moves)
 - ⚡ Built fully in Flutter (cross-platform)
 
 ---
@@ -83,11 +83,12 @@ This project is licensed under the MIT License.
 
  ## 🙌 Author
 
-- Made with by Dipesh Dhungana
+Made with by Dipesh Dhungana
 
---
+---
 
 ## 📁 Project Structure
+
 ```bash
 lib/
 ├── components/                # UI components (squares, pieces, captured pieces)
