@@ -36,6 +36,39 @@
 
 ---
 
+
+## 📁 Project Structure
+```bash
+lib/
+├── components/                # UI components (squares, pieces, captured pieces)
+│   ├── dead_piece.dart
+│   ├── piece_image.dart
+│   └── square.dart
+├── helper/                   # Utility functions
+│   └── helper_methods.dart
+├── models/                   # Core data models
+│   ├── chess_piece.dart
+│   └── game_state.dart
+├── services/                 # Logic services (move validation, game state, etc.)
+│   ├── board_initializer.dart
+│   ├── check_detector.dart
+│   ├── chess_game_service.dart
+│   ├── game_state_updater.dart
+│   ├── helpers.dart
+│   ├── move_generator.dart
+│   └── move_validator.dart
+├── ui/                       # Game board UI and view logic
+│   ├── game_board.dart
+│   └── game_board_view.dart
+├── values/                   # App colors and constants
+│   └── colors.dart
+├── main.dart                 # Entry point
+└── generate_structure.dart   # Script to print project structure to file
+
+
+
+---
+
 ## 🚀 Getting Started
 ```bash
 git clone https://github.com/iamdipesh18/chess_game.git
@@ -44,5 +77,3 @@ flutter pub get
 flutter run
 
 ---
-
-### 📁 Project Structure
