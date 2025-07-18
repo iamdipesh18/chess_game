@@ -1,16 +1,45 @@
-# chess_game
+<h1 align="center">
+  ♟️ Flutter Chess Game
+</h1>
 
-A new Flutter project.
+<p align="center">
+  A modern, interactive chess game built in Flutter. Fully modular, cleanly architected, and customizable — perfect for learning, extending, or just playing a game of chess!
+</p>
 
-## Getting Started
+<p align="center">
+  <img src="https://img.shields.io/badge/Flutter-3.x-blue?logo=flutter" />
+  <img src="https://img.shields.io/badge/License-MIT-green" />
+  <img src="https://img.shields.io/github/stars/iamdipesh18/chess_game?style=social" />
+</p>
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 🎮 Preview
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+> Add your own GIF or screenshot here (record using Screenity, OBS, or VS Code Recorder):
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<p align="center">
+  <img src="assets/demo.gif" alt="Chess Game Demo" width="600"/>
+</p>
+
+---
+
+## ✨ Features
+
+- ♔ Classic 8×8 chess board
+- 💡 Legal move generation & king safety validation
+- 🔒 Check & checkmate detection
+- 🔄 State management using modular service classes
+- 🧩 Clean, maintainable architecture (separation of UI & logic)
+- 📱 Responsive & interactive UI (tap/drag moves)
+- ⚡ Built fully in Flutter (cross-platform)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repo
+
+```bash
+git clone https://github.com/iamdipesh18/chess_game.git
+cd chess_game
