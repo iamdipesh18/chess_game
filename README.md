@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="Chess Game Logo" width="120" />
+  <img src="assets/app_icon.png" alt="Chess Game Logo" width="120" />
 </p>
 
 <h1 align="center">
