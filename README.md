@@ -46,12 +46,12 @@ cd chess_game
 
 ---
 
-### 2. Install Dependencies
+#Install Dependencies
 ```bash 
 flutter pub get
 
 ---
 
-### 3. Run the App
+#Run the App
 ```bash 
 flutter run
