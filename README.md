@@ -18,12 +18,12 @@
 
 <table align="center">
   <tr>
-    <td><img src="assets/screenshot1.png" alt="Screenshot 1" width="280" /></td>
-    <td><img src="assets/screenshot2.png" alt="Screenshot 2" width="280" /></td>
+    <td><img src="assets/screenshots/Screenshot1.png" alt="Screenshot 1" width="280" /></td>
+    <td><img src="assets/screenshots/Screenshot2.png" alt="Screenshot 2" width="280" /></td>
   </tr>
   <tr>
-    <td><img src="assets/screenshot3.png" alt="Screenshot 3" width="280" /></td>
-    <td><img src="assets/screenshot4.png" alt="Screenshot 4" width="280" /></td>
+    <td><img src="assets/screenshots/Screenshot3.png" alt="Screenshot 3" width="280" /></td>
+    <td><img src="assets/screenshots/Screenshot4.png" alt="Screenshot 4" width="280" /></td>
   </tr>
 </table>
 
