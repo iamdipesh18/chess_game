@@ -36,6 +36,56 @@
 
 ---
 
+## 🧠 How It Works
+
+- ChessGameService: Central controller that manages the board, turns, and game state
+- MoveGenerator: Generates pseudo-legal moves for selected pieces
+- MoveValidator: Filters moves based on king safety
+- GameStateUpdater: Updates board state, removes captured pieces, switches turns
+- UI: Interactive square/piece components built with GestureDetectors and Stacks
+
+---
+
+## 📺 Based On
+
+This project is based on the amazing YouTube tutorial by Mitch Koko:
+👉 Flutter Chess Game Tutorial [https://www.youtube.com/watch?v=cXfX1yYbAno]
+This repo adds:
+- 🧠 Better modular architecture
+- ✅ Full move validation and game state management
+- 📁 Scalable folder structure and code organization
+
+---
+
+## 📌 Roadmap for Upgrades
+
+ - Add chess clock/timer
+ - Add undo/redo functionality
+ - Multiplayer (local & Firebase online)
+ - AI opponent (Minimax / Stockfish API)
+ - Add themes & animations
+ - Export PGN / Save game state
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome!
+If you have ideas for features or improvements, feel free to fork this repo and submit a PR.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+ ---
+
+ ## 🙌 Author
+
+- Made with by Dipesh Dhungana
+
+--
 
 ## 📁 Project Structure
 ```bash
