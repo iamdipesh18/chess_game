@@ -1,0 +1,25 @@
+lib/
+  📁 lib\components
+    📄 lib\components\dead_piece.dart
+    📄 lib\components\piece_image.dart
+    📄 lib\components\square.dart
+  📄 lib\generate_structure.dart
+  📁 lib\helper
+    📄 lib\helper\helper_methods.dart
+  📄 lib\main.dart
+  📁 lib\models
+    📄 lib\models\chess_piece.dart
+    📄 lib\models\game_state.dart
+  📁 lib\services
+    📄 lib\services\board_initializer.dart
+    📄 lib\services\check_detector.dart
+    📄 lib\services\chess_game_service.dart
+    📄 lib\services\game_state_updater.dart
+    📄 lib\services\helpers.dart
+    📄 lib\services\move_generator.dart
+    📄 lib\services\move_validator.dart
+  📁 lib\ui
+    📄 lib\ui\game_board.dart
+    📄 lib\ui\game_board_view.dart
+  📁 lib\values
+    📄 lib\values\colors.dart
