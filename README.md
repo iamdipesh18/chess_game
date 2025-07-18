@@ -37,21 +37,12 @@
 ---
 
 ## 🚀 Getting Started
-
-### 1. Clone the Repo
-
 ```bash
 git clone https://github.com/iamdipesh18/chess_game.git
 cd chess_game
-
----
-
-#Install Dependencies
-```bash 
 flutter pub get
+flutter run
 
 ---
 
-#Run the App
-```bash 
-flutter run
+### 📁 Project Structure
